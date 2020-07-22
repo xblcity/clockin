@@ -31,7 +31,7 @@ app.use(async (ctx) => {
 app.listen(3001);
 ```
 
-全局安装`nodemon`，并在命令中添加`dev`
+全局安装`nodemon`，并在`package.json`命令中添加`dev`
 
 ```js
 "dev": "nodemon src/index.ts"
@@ -59,13 +59,23 @@ touch test.ts
 ```ts
 import { Context } from "koa";
 
-class TestController {
+class TestGetController {
   async test(ctx: Context) {
+    console.log(ctx.query);
     ctx.body = { data: "你好" };
   }
 }
 
-export default new TestController();
+class TestPostController {
+  async test(ctx: Context) {
+    console.log(ctx.query);
+    console.log(ctx.request.body);
+    ctx.body = { data: "你好" };
+  }
+}
+
+export const TestGet = new TestGetController();
+export const TestPost = new TestPostController();
 ```
 
 ### 创建 router
@@ -77,7 +87,7 @@ touch index.ts
 ```
 
 ```ts
-import TestController from "../controller/test";
+import { TestGet, TestPost } from "../controller/test";
 
 export interface RouteItem {
   path: string;
@@ -89,7 +99,12 @@ export const AppRoutes: RouteItem[] = [
   {
     path: "/api/test",
     method: "get",
-    action: TestController.test,
+    action: TestGet.test,
+  },
+  {
+    path: "/api/test",
+    method: "post",
+    action: TestPost.test,
   },
 ];
 ```
