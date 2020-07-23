@@ -12,6 +12,10 @@ const router = new Router();
 // ep. router.get('/test', action) action回调可接收ctx参数
 AppRoutes.forEach((route) => router[route.method](route.path, route.action));
 
-app.use(cors()).use(bodyParser()).use(router.routes());
+app
+  .use(cors())
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
 app.listen(3001);

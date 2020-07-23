@@ -58,24 +58,20 @@ touch test.ts
 
 ```ts
 import { Context } from "koa";
-
-class TestGetController {
-  async test(ctx: Context) {
+class TestController {
+  public async testGet(ctx: Context) {
     console.log(ctx.query);
     ctx.body = { data: "你好" };
   }
-}
 
-class TestPostController {
-  async test(ctx: Context) {
+  public async testPost(ctx: Context) {
     console.log(ctx.query);
     console.log(ctx.request.body);
     ctx.body = { data: "你好" };
   }
 }
 
-export const TestGet = new TestGetController();
-export const TestPost = new TestPostController();
+export default new TestController();
 ```
 
 ### 创建 router
@@ -87,7 +83,7 @@ touch index.ts
 ```
 
 ```ts
-import { TestGet, TestPost } from "../controller/test";
+import TestController from "../controllers/test";
 
 export interface RouteItem {
   path: string;
@@ -99,12 +95,12 @@ export const AppRoutes: RouteItem[] = [
   {
     path: "/api/test",
     method: "get",
-    action: TestGet.test,
+    action: TestController.testGet,
   },
   {
     path: "/api/test",
     method: "post",
-    action: TestPost.test,
+    action: TestController.testPost,
   },
 ];
 ```
@@ -126,9 +122,13 @@ const router = new Router();
 // ep. router.get('/test', action) action回调可接收ctx参数
 AppRoutes.forEach((route) => router[route.method](route.path, route.action));
 
-app.use(cors()).use(bodyParser()).use(router.routes());
+app
+  .use(cors())
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
 app.listen(3001);
 ```
 
-postman进行测试
+`postman` 进行测试，`POST` 选择 `raw/json`

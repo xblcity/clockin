@@ -1,19 +1,15 @@
 import { Context } from "koa";
-
-class TestGetController {
-  async test(ctx: Context) {
+class TestController {
+  public async testGet(ctx: Context) {
     console.log(ctx.query);
     ctx.body = { data: "你好" };
   }
-}
 
-class TestPostController {
-  async test(ctx: Context) {
+  public async testPost(ctx: Context) {
     console.log(ctx.query);
     console.log(ctx.request.body);
     ctx.body = { data: "你好" };
   }
 }
 
-export const TestGet = new TestGetController();
-export const TestPost = new TestPostController();
+export default new TestController();

@@ -1,4 +1,4 @@
-import { TestGet, TestPost } from "../controller/test";
+import TestController from "../controllers/test";
 
 export interface RouteItem {
   path: string;
@@ -10,11 +10,11 @@ export const AppRoutes: RouteItem[] = [
   {
     path: "/api/test",
     method: "get",
-    action: TestGet.test,
+    action: TestController.testGet,
   },
   {
     path: "/api/test",
     method: "post",
-    action: TestPost.test,
+    action: TestController.testPost,
   },
 ];
