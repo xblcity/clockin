@@ -1,6 +1,6 @@
 # Server
 
-## 初始化
+## 1.初始化
 
 ```bash
 npm init -y
@@ -37,7 +37,7 @@ app.listen(3001);
 "dev": "nodemon src/index.ts"
 ```
 
-## 配置 controller & router
+## 2.配置 controller & router
 
 ```bash
 yarn add koa-router -S
@@ -132,3 +132,83 @@ app.listen(3001);
 ```
 
 `postman` 进行测试，`POST` 选择 `raw/json`
+
+## 3.连接数据库
+
+### 数据库准备
+
+- 安装 mysql 数据库，安装 mysql workbench
+- 创建数据库 koa-test
+
+### typeorm配置
+
+```bash
+yarn add mysql typeorm reflect-metadata -S
+```
+
+```bash
+touch ormconfig.js
+```
+
+```js
+module.exports = {
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "root",
+  password: "123456",
+  database: "koa-test",
+  synchronize: true,
+  entities: ["src/entity/*.ts"],
+};
+```
+
+### tsconfig.json
+
+```json
+// 注释 
+"strict": true,
+// 解除注释
+"experimentalDecorators": true, 
+```
+
+### types定义
+
+```bash
+mkdir types
+cd types
+touch user.d.ts
+```
+
+```ts
+export as namespace IUser;
+
+export interface Item {
+  id: number;
+  username: string;
+  password: string;
+}
+```
+
+### entity定义
+
+```bash
+mkdir entity
+cd entity
+touch user.ts
+```
+
+```ts
+
+```
+
+### controller定义
+
+```bash
+cd controllers
+touch user.ts
+```
+
+```ts
+
+```
