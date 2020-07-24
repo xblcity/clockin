@@ -4,7 +4,7 @@
 
 ```bash
 npm init -y
-yarn add typescript ts-node -D
+yarn add typescript ts-node@6.2.0 -D #ts-node安装@7版本以上不出现命名空间不识别的情况
 yarn add koa -S
 yarn add @types/koa
 ```
@@ -135,15 +135,19 @@ app.listen(3001);
 
 ## 3.连接数据库
 
+- 安装 typeorm，配置 entity 以及 ormconfig，入口配置连接
+- 编写对应 controller 以及 router
+
 ### 数据库准备
 
 - 安装 mysql 数据库，安装 mysql workbench
 - 创建数据库 koa-test
 
-### typeorm配置
+### typeorm 配置
 
 ```bash
 yarn add mysql typeorm reflect-metadata -S
+yarn add argon2 -S # 用于密码加密
 ```
 
 ```bash
@@ -166,13 +170,14 @@ module.exports = {
 ### tsconfig.json
 
 ```json
-// 注释 
+// 注释
 "strict": true,
 // 解除注释
-"experimentalDecorators": true, 
+"experimentalDecorators": true,
+"emitDecoratorMetadata": true,
 ```
 
-### types定义
+### types 定义
 
 ```bash
 mkdir types
@@ -190,19 +195,36 @@ export interface Item {
 }
 ```
 
-### entity定义
+### entity 定义
 
 ```bash
 mkdir entity
 cd entity
 touch user.ts
+touch auth.ts # 注册
 ```
 
 ```ts
+// user.ts
 
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity()
+export class User implements IUser.Item {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ select: false })
+  password: string;
+}
+
+export default User;
 ```
 
-### controller定义
+### controller 定义
 
 ```bash
 cd controllers
@@ -210,5 +232,112 @@ touch user.ts
 ```
 
 ```ts
+// user.ts
 
+import { Context } from "koa";
+import { getManager } from "typeorm";
+
+import { User } from "../entity/user";
+
+class UserController {
+  public static async listUser(ctx: Context) {
+    const userRepository = getManager().getRepository(User);
+    const users = await userRepository.find();
+
+    ctx.status = 200;
+    ctx.body = users;
+  }
+
+  public static async showUserDetail(ctx: Context) {
+    const userRepository = getManager().getRepository(User);
+    const user = await userRepository.findOne(ctx.query.id);
+
+    if (user) {
+      ctx.status = 200;
+      ctx.body = user;
+    } else {
+      ctx.status = 404;
+    }
+  }
+
+  public static async updateUser(ctx: Context) {
+    const userRepository = getManager().getRepository(User);
+    await userRepository.update(ctx.query.id, ctx.request.body);
+    const updateUser = await userRepository.findOne(ctx.query.id);
+
+    if (updateUser) {
+      ctx.status = 200;
+      ctx.body = updateUser;
+    } else {
+      ctx.status = 404;
+    }
+  }
+
+  public static async deleteUser(ctx: Context) {
+    const userRepository = getManager().getRepository(User);
+    await userRepository.delete(ctx.query.id);
+
+    ctx.status = 204;
+  }
+}
+
+export default UserController;
+```
+
+```ts
+// auth.ts
+
+import { Context } from "koa";
+import * as argons2 from "argon2";
+import { getManager } from "typeorm";
+import { User } from "../entity/user";
+
+export default class AuthController {
+  public static async register(ctx: Context) {
+    const userRepository = getManager().getRepository(User);
+
+    const newUser = new User();
+    newUser.name = ctx.request.body.name;
+    newUser.password = await argons2.hash(ctx.request.body.password);
+
+    const user = await userRepository.save(newUser);
+
+    ctx.status = 201;
+    ctx.body = user;
+  }
+}
+```
+
+### 入口配置
+
+```ts
+import Koa from "koa";
+import Router from "koa-router";
+import cors from "koa2-cors";
+import bodyParser from "koa-bodyparser";
+import { createConnection } from "typeorm";
+import "reflect-metadata";
+
+import { AppRoutes } from "./routers";
+
+createConnection()
+  .then(() => {
+    const app = new Koa();
+
+    const router = new Router();
+
+    // ep. router.get('/test', action) action回调可接收ctx参数
+    AppRoutes.forEach((route) =>
+      router[route.method](route.path, route.action)
+    );
+
+    app
+      .use(cors())
+      .use(bodyParser())
+      .use(router.routes())
+      .use(router.allowedMethods());
+
+    app.listen(3001);
+  })
+  .catch((err: string) => console.log("TypeORM connection error", err));
 ```

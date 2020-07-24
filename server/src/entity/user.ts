@@ -6,7 +6,7 @@ export class User implements IUser.Item {
   id: number;
 
   @Column()
-  username: string;
+  name: string;
 
   @Column({ select: false })
   password: string;
