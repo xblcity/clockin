@@ -13,7 +13,6 @@ createConnection()
 
     const router = new Router();
 
-    // ep. router.get('/test', action) action回调可接收ctx参数
     AppRoutes.forEach((route) =>
       router[route.method](route.path, route.action)
     );

@@ -1,6 +1,4 @@
-import TestController from "../controllers/test";
 import UserController from "../controllers/user";
-import AuthController from "../controllers/auth";
 
 export interface RouteItem {
   path: string;
@@ -10,14 +8,9 @@ export interface RouteItem {
 
 export const AppRoutes: RouteItem[] = [
   {
-    path: "/api/test",
-    method: "get",
-    action: TestController.testGet,
-  },
-  {
-    path: "/api/test",
+    path: "/api/wxLogin",
     method: "post",
-    action: TestController.testPost,
+    action: UserController.wxLogin,
   },
   {
     path: "/api/listUser",
@@ -38,10 +31,5 @@ export const AppRoutes: RouteItem[] = [
     path: "/api/deleteUser",
     method: "post",
     action: UserController.deleteUser,
-  },
-  {
-    path: "/api/register",
-    method: "post",
-    action: AuthController.register,
   },
 ];
