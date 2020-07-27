@@ -1,6 +1,6 @@
 import { Context } from "koa";
 import { getManager } from "typeorm";
-import request from "request";
+import rp from "request-promise";
 import { wxConfig } from "../config";
 
 import { User } from "../entity/user";
@@ -10,34 +10,30 @@ class UserController {
     const { code } = ctx.request.body;
     if (!code) {
       ctx.status = 400;
-      ctx.body = "参数不正确";
+      ctx.body = "缺少code参数";
       return;
     }
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${wxConfig.appid}&secret=${wxConfig.secret}&js_code=${code}&grant_type=authorization_code`;
-    await request(url, (err, response) => {
-      console.log(err, response.body);
-      if (err) {
-        ctx.status = 401;
-        ctx.body = "请求微信服务器失败";
-      }
-      ctx.status = 200;
-      ctx.body = {
-        openid: 9,
-      };
-      const { errcode, errmsg, openid } = JSON.parse(response.body);
-      if (errcode || errmsg) {
-        ctx.status = 401;
+    await rp(url)
+      .then((response) => {
+        const res = JSON.parse(response);
+        const { errcode, errmsg, openid } = res;
+        if (errcode || errmsg) {
+          ctx.status = 400;
+          ctx.body = {
+            errcode,
+            errmsg,
+          };
+          return;
+        }
+        ctx.status = 200;
         ctx.body = {
-          errcode,
-          errmsg,
+          openid,
         };
-        return;
-      }
-      ctx.status = 200;
-      ctx.body = {
-        openid,
-      };
-    });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   public static async listUser(ctx: Context) {
