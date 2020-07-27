@@ -1,20 +1,24 @@
-import { Component } from 'react'
-import './app.less'
+import { Component } from "react";
+import "taro-ui/dist/style/index.scss";
+import { Provider } from "react-redux";
+import "./app.less";
+import configStore from "./store";
+
+const store = configStore();
 
 class App extends Component {
+  componentDidMount() {}
 
-  componentDidMount () {}
+  componentDidShow() {}
 
-  componentDidShow () {}
+  componentDidHide() {}
 
-  componentDidHide () {}
-
-  componentDidCatchError () {}
+  componentDidCatchError() {}
 
   // this.props.children 是将要会渲染的页面
-  render () {
-    return this.props.children
+  render() {
+    return <Provider store={}>{this.props.children}</Provider>;
   }
 }
 
-export default App
+export default App;
