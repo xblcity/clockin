@@ -1,21 +1,26 @@
-import { ADD, MINUS } from "./constants";
+import { UserConstants } from "./constants";
+import { UserInfo } from "./reducer";
 
-export const add = () => {
+export const addUserInfo = (info: UserInfo) => {
   return {
-    type: ADD,
+    type: UserConstants.ADDUSERINFO,
+    payload: {
+      info,
+    },
   };
 };
-export const minus = () => {
-  return {
-    type: MINUS,
-  };
-};
+
+export interface AddUserInfoAction {
+  type: UserConstants.ADDUSERINFO;
+  payload: UserInfo;
+}
+export type Action = AddUserInfoAction;
 
 // 异步的 action
-export function asyncAdd() {
-  return (dispatch) => {
-    setTimeout(() => {
-      dispatch(add());
-    }, 2000);
-  };
-}
+// export function asyncAdd() {
+//   return (dispatch) => {
+//     setTimeout(() => {
+//       dispatch(add(3));
+//     }, 2000);
+//   };
+// }

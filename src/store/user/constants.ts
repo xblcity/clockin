@@ -1,2 +1,3 @@
-export const ADD = 'ADD'
-export const MINUS = 'MINUS'
+export enum UserConstants {
+  ADDUSERINFO = 'add_user_info',
+}

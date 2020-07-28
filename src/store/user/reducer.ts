@@ -1,22 +1,25 @@
-import { ADD, MINUS } from './constants'
+import { Action } from "./actions";
+import { UserConstants } from "./constants";
 
-const INITIAL_STATE = {
-  num: 0
+export interface UserInfo {
+  nickname: string;
+}
+interface State {
+  userInfo: UserInfo | null;
 }
 
-export default function counter (state = INITIAL_STATE, action) {
+const initialState: State = {
+  userInfo: null,
+};
+
+export default function counter(state: State = initialState, action: Action) {
   switch (action.type) {
-    case ADD:
+    case UserConstants.ADDUSERINFO:
       return {
         ...state,
-        num: state.num + 1
-      }
-    case MINUS:
-      return {
-        ...state,
-        num: state.num - 1
-      }
+        userInfo: action.payload,
+      };
     default:
-      return state
+      return state;
   }
 }

@@ -1,6 +1,6 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import "taro-ui/dist/style/index.scss";
-import { Provider } from "react-redux";
+import { Provider } from "@tarojs/redux";
 import "./app.less";
 import configStore from "./store";
 
@@ -17,7 +17,7 @@ class App extends Component {
 
   // this.props.children 是将要会渲染的页面
   render() {
-    return <Provider store={}>{this.props.children}</Provider>;
+    return <Provider store={store}>{this.props.children}</Provider>;
   }
 }
 
