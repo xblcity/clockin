@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
 interface IProps {
   isLogin: boolean
 }
-class Clockin extends Component<null, IProps> {
+class Clockin extends Component<IProps> {
   componentWillMount() {}
 
   componentDidMount() {}
@@ -24,14 +24,15 @@ class Clockin extends Component<null, IProps> {
 
   render() {
     const { isLogin } = this.props;
+    console.log(isLogin)
     return (
-      <View className="mineContainer">
+      <View className='mineContainer'>
         {isLogin ? (
-          <View className="noLogin">
+          <View className='noLogin'>
             <AtButton>点击登录</AtButton>
           </View>
         ) : (
-          <View className="user">
+          <View className='user'>
             <AtAvatar circle image='https://jdc.jd.com/img/200'></AtAvatar>
             <AtButton>昵称</AtButton>
           </View>
@@ -41,4 +42,4 @@ class Clockin extends Component<null, IProps> {
   }
 }
 
-export default connect(mapStateToProps, null)(Clockin);
+export default connect(mapStateToProps)(Clockin);
