@@ -1,0 +1,33 @@
+{
+  "pages": ["pages/clockin/index", "pages/record/index", "pages/mine/index"],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "小小鹿打卡",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/clockin/index",
+        "text": "打卡",
+        "iconPath": "./images/clockin.png",
+        "selectedIconPath": "./images/clockinActive.png"
+      },
+      {
+        "pagePath": "pages/record/index",
+        "text": "统计",
+        "iconPath": "./images/record.png",
+        "selectedIconPath": "./images/recordActive.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "./images/mine.png",
+        "selectedIconPath": "./images/mineActive.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
