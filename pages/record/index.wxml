@@ -1,6 +1,30 @@
 <!--logs.wxml-->
-<view class="container log-list">
+<!-- <view class="container log-list">
   <block wx:for="{{logs}}" wx:for-item="log">
     <text class="log-item">{{index + 1}}. {{log}}</text>
   </block>
+</view> -->
+<view class="record-container">
+  <nav class="nav">
+    <view class="nav-header">
+      <block>周统计</block>
+      <block>月统计</block>
+      <block>年统计</block>
+    </view>
+    <view class="nav-content">
+      <block>平均早睡</block>
+      <block>平均早起</block>
+      <block>平均睡眠</block>
+      <block>睡觉起床折线图</block>
+      <block>平均睡眠柱状图</block>
+    </view>
+  </nav>
+  <view>打卡统计日历</view>
+  <view>
+    <view>打卡统计</view>
+    <view>最早起床，最晚起床，连续早起，累计早起</view>
+    <view>最早睡觉，最晚睡觉，连续早睡，累计早睡</view>
+  </view>
+  <view>早睡早起曲线图</view>
+  <view>睡眠时间曲线图</view>
 </view>

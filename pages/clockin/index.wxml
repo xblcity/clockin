@@ -1,13 +1,13 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<view class="clockin-container">
+  <view class="time">
+    <text>当前时间</text>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="clockin">
+    <view class="wake"> 早起打卡 </view>
+    <view class="sleep"> 睡觉打卡 </view>
   </view>
+  <!-- <view class="rules">
+    <text class="rules-text">查看打卡规则 > </text>
+  </view> -->
 </view>

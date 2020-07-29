@@ -1,21 +1,50 @@
 /**index.wxss**/
-.userinfo {
+.clockin-container {
+  width: 750rpx;
+  height: 100vh;
+}
+
+.time {
+  width: 100%;
+  padding-top: 5vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  height: 20vh;
+}
+
+.clockin {
+  width: 100%;
+  height: 30vh;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+.wake {
+  width: 240rpx;
+  height: 240rpx;
+  display: flex;
+  justify-content: center;
   align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
   border-radius: 50%;
+  background-color: rgb(6, 168, 245);
+  color: #333;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.sleep {
+  width: 240rpx;
+  height: 240rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgb(6, 168, 245);
+  color: #333;
 }
 
-.usermotto {
-  margin-top: 200px;
+.rules {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20rpx;
 }
