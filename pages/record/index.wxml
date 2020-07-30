@@ -15,16 +15,23 @@
       <block>平均早睡</block>
       <block>平均早起</block>
       <block>平均睡眠</block>
-      <block>睡觉起床折线图</block>
-      <block>平均睡眠柱状图</block>
+      <view>起床/睡觉时间</view>
+      <view class="line-container">
+        <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecScatter }}"></ec-canvas>
+      </view>
+      <block>睡眠时间统计</block>
+      <view class="bar-container">
+        <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ecBar }}"></ec-canvas>
+      </view>
     </view>
   </nav>
   <view>打卡统计日历</view>
+  <view class="calendar-container">
+    <ec-canvas id="mychart-dom-calendar" canvas-id="mychart-calendar" ec="{{ ecCalendar }}"></ec-canvas>
+  </view>
   <view>
     <view>打卡统计</view>
     <view>最早起床，最晚起床，连续早起，累计早起</view>
     <view>最早睡觉，最晚睡觉，连续早睡，累计早睡</view>
   </view>
-  <view>早睡早起曲线图</view>
-  <view>睡眠时间曲线图</view>
 </view>
