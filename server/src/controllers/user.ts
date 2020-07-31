@@ -13,27 +13,36 @@ class UserController {
       ctx.body = "缺少code参数";
       return;
     }
-    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${wxConfig.appid}&secret=${wxConfig.secret}&js_code=${code}&grant_type=authorization_code`;
-    await rp(url)
-      .then((response) => {
-        const res = JSON.parse(response);
-        const { errcode, errmsg, openid } = res;
-        if (errcode || errmsg) {
-          ctx.status = 400;
-          ctx.body = {
-            errcode,
-            errmsg,
-          };
-          return;
-        }
-        ctx.status = 200;
-        ctx.body = {
-          openid,
-        };
-      })
-      .catch((err) => {
-        console.error(err);
+    // const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${wxConfig.appid}&secret=${wxConfig.secret}&js_code=${code}&grant_type=authorization_code`;
+    // await rp(url)
+    //   .then((response) => {
+    //     const res = JSON.parse(response);
+    //     const { errcode, errmsg, openid } = res;
+    //     if (errcode || errmsg) {
+    //       ctx.status = 400;
+    //       ctx.body = {
+    //         errcode,
+    //         errmsg,
+    //       };
+    //       return;
+    //     }
+    //     ctx.status = 200;
+    //     ctx.body = {
+    //       openid,
+    //     };
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+
+      // 写入数据库
+      const userRepository = getManager().getRepository(User);
+
+      const newUser = userRepository.create({
+        openid: "123123",
       });
+      userRepository.save(newUser);
+      ctx.body = "注册成功";
   }
 
   public static async listUser(ctx: Context) {
@@ -51,19 +60,6 @@ class UserController {
     if (user) {
       ctx.status = 200;
       ctx.body = user;
-    } else {
-      ctx.status = 404;
-    }
-  }
-
-  public static async updateUser(ctx: Context) {
-    const userRepository = getManager().getRepository(User);
-    await userRepository.update(ctx.query.id, ctx.request.body);
-    const updateUser = await userRepository.findOne(ctx.query.id);
-
-    if (updateUser) {
-      ctx.status = 200;
-      ctx.body = updateUser;
     } else {
       ctx.status = 404;
     }

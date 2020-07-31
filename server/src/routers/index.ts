@@ -1,4 +1,5 @@
 import UserController from "../controllers/user";
+import TimeController from "../controllers/time";
 
 export interface RouteItem {
   path: string;
@@ -23,13 +24,13 @@ export const AppRoutes: RouteItem[] = [
     action: UserController.showUserDetail,
   },
   {
-    path: "/api/updateUser",
-    method: "post",
-    action: UserController.updateUser,
-  },
-  {
     path: "/api/deleteUser",
     method: "post",
     action: UserController.deleteUser,
+  },
+  {
+    path: "/api/postWakeTime",
+    method: "post",
+    action: TimeController.postWakeTime,
   },
 ];
