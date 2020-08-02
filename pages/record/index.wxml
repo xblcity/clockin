@@ -1,0 +1,37 @@
+<!--logs.wxml-->
+<!-- <view class="container log-list">
+  <block wx:for="{{logs}}" wx:for-item="log">
+    <text class="log-item">{{index + 1}}. {{log}}</text>
+  </block>
+</view> -->
+<view class="record-container">
+  <nav class="nav">
+    <view class="nav-header">
+      <block>周统计</block>
+      <block>月统计</block>
+      <block>年统计</block>
+    </view>
+    <view class="nav-content">
+      <block>平均早睡</block>
+      <block>平均早起</block>
+      <block>平均睡眠</block>
+      <view>起床/睡觉时间</view>
+      <view class="line-container">
+        <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecScatter }}"></ec-canvas>
+      </view>
+      <block>睡眠时间统计</block>
+      <view class="bar-container">
+        <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ecBar }}"></ec-canvas>
+      </view>
+    </view>
+  </nav>
+  <view>打卡统计日历</view>
+  <view class="calendar-container">
+    <ec-canvas id="mychart-dom-calendar" canvas-id="mychart-calendar" ec="{{ ecCalendar }}"></ec-canvas>
+  </view>
+  <view>
+    <view>打卡统计</view>
+    <view>最早起床，最晚起床，连续早起，累计早起</view>
+    <view>最早睡觉，最晚睡觉，连续早睡，累计早睡</view>
+  </view>
+</view>
