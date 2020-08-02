@@ -11,6 +11,15 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
+        wx.request({
+          url: `${this.globalData.host}/wxLogin`,
+          data: {
+            code: res.code
+          },
+          success (res) {
+            console.log(res.data)
+          }
+        })
       }
     })
     // 获取用户信息
@@ -35,6 +44,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    host: 'localhost:3001/api'
   }
 })

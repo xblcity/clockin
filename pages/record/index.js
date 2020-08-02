@@ -54,7 +54,12 @@ Page({
       },
     },
   },
-  onLoad: function () {},
+  onLoad: function () {
+    // 用户未登录，跳转至mine
+    // wx.navigateTo({
+    //   url: "../mine/index",
+    // });
+  },
   onReady() {},
 });
 
