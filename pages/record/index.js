@@ -1,17 +1,24 @@
 //logs.js
-const util = require("../../utils/util.js");
+// const util = require("../../utils/util.js");
 import * as echarts from "../../ec-canvas/echarts";
+
+const app = getApp();
+var sliderWidth = 96;
 
 Page({
   onShareAppMessage: function (res) {
     return {
-      title: "ECharts 可以在微信小程序中使用啦！",
-      path: "/pages/index/index",
+      title: "我的打卡记录",
+      path: "/pages/clockin/index",
       success: function () {},
       fail: function () {},
     };
   },
   data: {
+    tabs: ["周统计", "月统计", "年统计"],
+    activeIndex: 1,
+    sliderOffset: 0,
+    sliderLeft: 0,
     ecBar: {
       onInit: function (canvas, width, height, dpr) {
         const barChart = echarts.init(canvas, null, {
@@ -54,9 +61,63 @@ Page({
       },
     },
   },
-  onLoad: function () {},
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id,
+    });
+  },
+  onLoad: function () {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft:
+            (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset:
+            (res.windowWidth / that.data.tabs.length) * that.data.activeIndex,
+        });
+      },
+    });
+
+    const userId = wx.getStorageSync("userId");
+    // 用户不存在或者未登录，跳转至mine
+    // if (!userId) {
+    //   wx.switchTab({
+    //     url: "../mine/index",
+    //   });
+    // }
+
+    wx.request({
+      url: `${app.globalData.host}/postDayList`,
+      success(res) {
+        console.log(res.data);
+        const {
+          dayList,
+          averageSleepTime,
+          averageWakeUpTime,
+          averageBedTime,
+        } = res.data;
+        // 处理数据
+        // setState
+      },
+    });
+  },
   onReady() {},
 });
+
+function initChart(canvas, width, height, dpr, options) {
+  const chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // 像素
+  });
+  canvas.setChart(chart);
+
+  var option = options;
+  chart.setOption(option);
+  return chart;
+}
 
 function getBarOption() {
   return {

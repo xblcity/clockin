@@ -42,9 +42,13 @@
   color: #333;
 }
 
-.rules {
+.sleep.weui-btn, .wake.weui-btn {
+  margin-top: 0;
+}
+
+/* .rules {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
   bottom: 20rpx;
-}
+} */

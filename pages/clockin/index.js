@@ -1,67 +1,109 @@
 //index.js
 //获取应用实例
 const app = getApp();
+import moment from '../../utils/moment.min.js'
 
 Page({
   data: {
-    motto: "Hello World",
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse("button.open-type.getUserInfo"),
-    showOneButtonDialog: false,
-    oneButton: [{ text: "确定" }],
+    successShow: false,
+    sucessText: "",
+    buttonText: [{ text: "确定" }],
+    errShow: false,
+    errText: "",
+    userId: "",
   },
+  // 隐藏dialog
   tapDialogButton(e) {
     this.setData({
       dialogShow: false,
-      showOneButtonDialog: false,
     });
   },
-  tapOneDialogButton(e) {
-    this.setData({
-      showOneButtonDialog: true,
+  // 点击起床打卡
+  tapWakeUpButton(e) {
+    const hour = new Date().getHours();
+    if (hour > 12) {
+      this.setData({
+        errShow: true,
+        errText: "打卡不在时间0~12点范围内",
+      });
+      return;
+    }
+    const userId = wx.getStorageSync("userId");
+    // 发起请求
+    console.log(moment())
+    const that = this;
+    wx.request({
+      url: `${app.globalData.host}/postTime`,
+      data: {
+        userId,
+        dateTime,
+        bedTime,
+      },
+      success(res) {
+        if (res.statusCode !== 200) {
+          that.setData({
+            errShow: true,
+            errText: res.data.errMsg,
+          });
+          return
+        }
+        that.setData({
+          successShow: true,
+          sucessText: res.data.successMsg,
+        });
+      },
+      fail() {
+        that.setData({
+          errShow: true,
+          errText: "请求出错",
+        });
+      },
     });
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: "../logs/logs",
+  tapBedButton(e) {
+    const hour = new Date().getHours();
+    if (hour < 20) {
+      this.setData({
+        errShow: true,
+        errText: "打卡不在时间8~12点范围内",
+      });
+      return;
+    }
+    const that = this;
+    const dateTime = moment().format('YYYY-MM-DD')
+    const bedTime = moment().format('HH:mm:ss')
+    wx.request({
+      url: `${app.globalData.host}/postTime`,
+      data: {
+        // userId,
+        dateTime,
+        bedTime,
+      },
+      success(res) {
+        if (res.statusCode !== 200) {
+          that.setData({
+            errShow: true,
+            errText: res.data.errMsg,
+          });
+          return
+        }
+        that.setData({
+          successShow: true,
+          sucessText: res.data.successMsg,
+        });
+      },
+      fail() {
+        that.setData({
+          errShow: true,
+          errText: "请求出错",
+        });
+      },
     });
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true,
-      });
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = (res) => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true,
-        });
-      };
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: (res) => {
-          app.globalData.userInfo = res.userInfo;
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true,
-          });
-        },
-      });
-    }
-  },
-  getUserInfo: function (e) {
-    console.log(e);
-    app.globalData.userInfo = e.detail.userInfo;
+    const userId = wx.getStorageSync("userId");
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true,
+      userId,
     });
   },
 });
