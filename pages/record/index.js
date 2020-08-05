@@ -1,6 +1,9 @@
 //logs.js
-const util = require("../../utils/util.js");
+// const util = require("../../utils/util.js");
 import * as echarts from "../../ec-canvas/echarts";
+
+const app = getApp();
+var sliderWidth = 96;
 
 Page({
   onShareAppMessage: function (res) {
@@ -12,6 +15,10 @@ Page({
     };
   },
   data: {
+    tabs: ["周统计", "月统计", "年统计"],
+    activeIndex: 1,
+    sliderOffset: 0,
+    sliderLeft: 0,
     ecBar: {
       onInit: function (canvas, width, height, dpr) {
         const barChart = echarts.init(canvas, null, {
@@ -54,27 +61,63 @@ Page({
       },
     },
   },
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id,
+    });
+  },
   onLoad: function () {
-    const userId = wx.getStorageSync('userId')
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft:
+            (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset:
+            (res.windowWidth / that.data.tabs.length) * that.data.activeIndex,
+        });
+      },
+    });
+
+    const userId = wx.getStorageSync("userId");
     // 用户不存在或者未登录，跳转至mine
-    if (!userId) {
-      wx.navigateTo({
-        url: "../mine/index",
-      });
-    }
+    // if (!userId) {
+    //   wx.switchTab({
+    //     url: "../mine/index",
+    //   });
+    // }
 
     wx.request({
-      url: `${this.globalData.host}/postDayList`,
-      success (res) {
-        console.log(res.data)
-        const {dayList, averageSleepTime, averageWakeUpTime, averageBedTime} = res.data
+      url: `${app.globalData.host}/postDayList`,
+      success(res) {
+        console.log(res.data);
+        const {
+          dayList,
+          averageSleepTime,
+          averageWakeUpTime,
+          averageBedTime,
+        } = res.data;
         // 处理数据
         // setState
-      }
-    })
+      },
+    });
   },
   onReady() {},
 });
+
+function initChart(canvas, width, height, dpr, options) {
+  const chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // 像素
+  });
+  canvas.setChart(chart);
+
+  var option = options;
+  chart.setOption(option);
+  return chart;
+}
 
 function getBarOption() {
   return {
@@ -85,7 +128,7 @@ function getBarOption() {
         // 坐标轴指示器，坐标轴触发有效
         type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
       },
-    },ya
+    },
     grid: {
       left: "3%",
       right: "4%",
