@@ -4,7 +4,7 @@ const app = getApp();
 
 Page({
   data: {
-    motto: "Hello World",
+    motto: "小小鹿打卡",
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse("button.open-type.getUserInfo"), // 是否可使用 button.open-type

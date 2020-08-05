@@ -4,13 +4,18 @@
     <text>当前时间</text>
   </view>
   <view class="clockin">
-    <view class="wake weui-btn" bindtap="tapOneDialogButton">早起打卡</view>
-    <view class="sleep">睡觉打卡</view>
+    <view class="wake weui-btn" bindtap="tapWakeUpButton">起床打卡</view>
+    <view class="sleep weui-btn" bindtap="tapBedButton">睡觉打卡</view>
   </view>
-  <mp-dialog title="test1" show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
-    <view>test content1</view>
+  <mp-dialog title="打卡结果" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
+    <view>确定</view>
   </mp-dialog>
-  <!-- <view class="rules">
-    <text class="rules-text">查看打卡规则 > </text>
-  </view> -->
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+  <div id="toast" style="display: none;">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+          <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+          <p class="weui-toast__content">已完成</p>
+      </div>
+  </div>
 </view>

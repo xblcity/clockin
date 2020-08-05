@@ -1,11 +1,7 @@
 //app.js
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    // 小程序启动
     // 登录
     wx.login({
       success: res => {
@@ -18,6 +14,9 @@ App({
           },
           success (res) {
             console.log(res.data)
+            const { userId } = res.Date
+            // 存储用户id
+            wx.setStorageSync('userId', userId)
           }
         })
       }

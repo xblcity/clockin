@@ -5,8 +5,8 @@ import * as echarts from "../../ec-canvas/echarts";
 Page({
   onShareAppMessage: function (res) {
     return {
-      title: "ECharts 可以在微信小程序中使用啦！",
-      path: "/pages/index/index",
+      title: "我的打卡记录",
+      path: "/pages/clockin/index",
       success: function () {},
       fail: function () {},
     };
@@ -55,10 +55,23 @@ Page({
     },
   },
   onLoad: function () {
-    // 用户未登录，跳转至mine
-    // wx.navigateTo({
-    //   url: "../mine/index",
-    // });
+    const userId = wx.getStorageSync('userId')
+    // 用户不存在或者未登录，跳转至mine
+    if (!userId) {
+      wx.navigateTo({
+        url: "../mine/index",
+      });
+    }
+
+    wx.request({
+      url: `${this.globalData.host}/postDayList`,
+      success (res) {
+        console.log(res.data)
+        const {dayList, averageSleepTime, averageWakeUpTime, averageBedTime} = res.data
+        // 处理数据
+        // setState
+      }
+    })
   },
   onReady() {},
 });
@@ -72,7 +85,7 @@ function getBarOption() {
         // 坐标轴指示器，坐标轴触发有效
         type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
       },
-    },
+    },ya
     grid: {
       left: "3%",
       right: "4%",
