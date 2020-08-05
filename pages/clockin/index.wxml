@@ -7,15 +7,7 @@
     <view class="wake weui-btn" bindtap="tapWakeUpButton">起床打卡</view>
     <view class="sleep weui-btn" bindtap="tapBedButton">睡觉打卡</view>
   </view>
-  <mp-dialog title="打卡结果" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
-    <view>确定</view>
+  <mp-toptips msg="{{errText}}" type="error" show="{{errShow}}"></mp-toptips>
+  <mp-dialog title="{{successText}}" show="{{successShow}}" bindbuttontap="closeDialog" buttons="{{buttonText}}">
   </mp-dialog>
-  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
-  <div id="toast" style="display: none;">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-          <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-          <p class="weui-toast__content">已完成</p>
-      </div>
-  </div>
 </view>
