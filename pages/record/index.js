@@ -2,6 +2,83 @@
 // const util = require("../../utils/util.js");
 import * as echarts from "../../ec-canvas/echarts";
 
+// 百度echarts api
+
+const options = {
+  // 标题
+  title: {
+    text: "Echarts入门",
+  },
+  // 调色盘
+  color: [
+    "#c23531",
+    "#2f4554",
+    "#61a0a8",
+    "#d48265",
+    "#91c7ae",
+    "#749f83",
+    "#ca8622",
+    "#bda29a",
+    "#6e7074",
+    "#546570",
+    "#c4ccd3",
+  ],
+  // 提示框
+  tooltip: {},
+  // 图例说明
+  legend: {},
+  // 定位
+  grid: {
+    left: "center",
+    top: "middle",
+  },
+  // x轴坐标
+  xAxis: {
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  // x轴数组
+  // 对象形式
+  // yAxis: {
+  //   type: "value",
+  // },
+  // 数组形式,左右连个纵坐标，同时series也要有多个
+  yAxis: [
+    {
+      type: "value",
+      gridIndex: 0,
+    },
+    {
+      type: "value",
+      gridIndex: 1,
+    },
+  ],
+  // 单个或者多个组合
+  series: [
+    {
+      type: "bar",
+      data: [120, 200, 150, 80, 70, 110, 130],
+      label: {
+        show: true,
+      },
+      emphasis: {
+        itemStyle: {
+          // 高亮时点的颜色。
+          color: "blue",
+        },
+        label: {
+          show: true,
+          // 高亮时标签的文字。
+          // formatter: "This is a emphasis label.",
+        },
+      },
+    },
+    {
+      type: "line",
+      data: [],
+    },
+  ],
+};
+
 const app = getApp();
 var sliderWidth = 96;
 
@@ -110,7 +187,7 @@ function initChart(canvas, width, height, dpr, options) {
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
-    devicePixelRatio: dpr // 像素
+    devicePixelRatio: dpr, // 像素
   });
   canvas.setChart(chart);
 
@@ -129,16 +206,19 @@ function getBarOption() {
         type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
       },
     },
+    // 定位
     grid: {
       left: "3%",
       right: "4%",
       bottom: "3%",
       containLabel: true,
     },
+    // 坐标系x轴
     xAxis: {
       type: "category",
       data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     },
+    // 坐标系y轴
     yAxis: {
       type: "value",
     },
