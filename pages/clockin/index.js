@@ -11,6 +11,7 @@ Page({
     errShow: false,
     errText: "",
     userId: "",
+    currentTime: "",
   },
   // 隐藏dialog
   tapDialogButton(e) {
@@ -105,5 +106,11 @@ Page({
     this.setData({
       userId,
     });
+    setInterval(() => {
+      console.log(moment().format('HH:mm:ss'))
+      this.setData({
+        currentTime: moment().format('HH:mm:ss')
+      })
+    }, 1000);
   },
 });

@@ -1,7 +1,8 @@
 <!-- index.wxml -->
 <view class="clockin-container">
   <view class="time">
-    <!-- <text>当前时间</text> -->
+    <view class="desc">当前时间</view>
+    <view class="content">{{currentTime}}</view>
   </view>
   <view class="clockin">
     <view class="wake" bindtap="tapWakeUpButton">起床打卡</view>
