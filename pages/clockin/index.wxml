@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <view class="clockin-container">
   <view class="time">
-    <text>当前时间</text>
+    <!-- <text>当前时间</text> -->
   </view>
   <view class="clockin">
     <view class="wake weui-btn" bindtap="tapWakeUpButton">起床打卡</view>
