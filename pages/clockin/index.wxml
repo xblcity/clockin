@@ -4,8 +4,8 @@
     <!-- <text>当前时间</text> -->
   </view>
   <view class="clockin">
-    <view class="wake weui-btn" bindtap="tapWakeUpButton">起床打卡</view>
-    <view class="sleep weui-btn" bindtap="tapBedButton">睡觉打卡</view>
+    <view class="wake" bindtap="tapWakeUpButton">起床打卡</view>
+    <view class="sleep" bindtap="tapBedButton">睡觉打卡</view>
   </view>
   <mp-toptips msg="{{errText}}" type="error" show="{{errShow}}"></mp-toptips>
   <mp-dialog title="{{successText}}" show="{{successShow}}" bindbuttontap="closeDialog" buttons="{{buttonText}}">

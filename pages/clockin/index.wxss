@@ -20,7 +20,7 @@
   justify-content: space-around;
 }
 
-.wake {
+.wake, .sleep {
   width: 240rpx;
   height: 240rpx;
   display: flex;
@@ -28,23 +28,13 @@
   align-items: center;
   border-radius: 50%;
   background-color: #86A8E7;
+  font-size: 32rpx;
   color: #3E5151;
 }
 
-.sleep {
-  width: 240rpx;
-  height: 240rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: #86A8E7;
-  color: #3E5151;
-}
-
-.sleep.weui-btn, .wake.weui-btn {
+/* .sleep.weui-btn, .wake.weui-btn {
   margin-top: 0;
-}
+} */
 
 /* .rules {
   position: fixed;
