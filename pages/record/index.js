@@ -1,4 +1,4 @@
-import * as echarts from '../../ec-canvas/echarts';
+import * as echarts from "../../ec-canvas/echarts";
 
 const app = getApp();
 
@@ -6,7 +6,7 @@ function initChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
-    devicePixelRatio: dpr // new
+    devicePixelRatio: dpr, // new
   });
   canvas.setChart(chart);
 
@@ -29,9 +29,9 @@ function initChart(canvas, width, height, dpr) {
         // 时间转换
         const wakeUpTime = value[1] && value[1].split();
         const bedTime = value[2] && value[2].replace(".", ":");
-        return `起床时间：${wakeUpTime}<br/>
-        睡觉时间：${bedTime}<br/>
-        睡眠时长：${value[3] ? value[3] : ""}`;
+        return `  起床时间：${wakeUpTime}
+  睡觉时间：${bedTime}
+  睡眠时长：${value[3] ? value[3] : ""}`;
       },
     },
     xAxis: {
@@ -122,7 +122,7 @@ function initMonthChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
-    devicePixelRatio: dpr // new
+    devicePixelRatio: dpr, // new
   });
   canvas.setChart(chart);
 
@@ -145,9 +145,9 @@ function initMonthChart(canvas, width, height, dpr) {
         // 时间转换
         const wakeUpTime = value[1] && value[1].split();
         const bedTime = value[2] && value[2].replace(".", ":");
-        return `起床时间：${wakeUpTime}<br/>
-        睡觉时间：${bedTime}<br/>
-        睡眠时长：${value[3] ? value[3] : ""}`;
+        return `  起床时间：${wakeUpTime}
+  睡觉时间：${bedTime}
+  睡眠时长：${value[3] ? value[3] : ""}`;
       },
     },
     xAxis: {
@@ -257,23 +257,22 @@ function initMonthChart(canvas, width, height, dpr) {
 Page({
   onShareAppMessage: function (res) {
     return {
-      title: 'ECharts 我的打卡记录',
-      path: '/pages/clockin/index',
-      success: function () { },
-      fail: function () { }
-    }
+      title: "ECharts 我的打卡记录",
+      path: "/pages/clockin/index",
+      success: function () {},
+      fail: function () {},
+    };
   },
   data: {
     ecWeek: {
-      onInit: initChart
+      onInit: initChart,
     },
     ecMonth: {
-      onInit: initMonthChart
-    }
+      onInit: initMonthChart,
+    },
   },
 
-  onReady() {
-  },
+  onReady() {},
 
   onload() {
     const userId = wx.getStorageSync("userId");
@@ -298,5 +297,5 @@ Page({
         // setState
       },
     });
-  }
+  },
 });
