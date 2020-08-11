@@ -73,8 +73,10 @@ Page({
     const that = this;
     const dateTime = moment().format('YYYY-MM-DD')
     const bedTime = moment().format('HH:mm:ss')
+    console.log(`${app.globalData.host}/postTime`,dateTime, bedTime,this.state.userId  )
     wx.request({
       url: `${app.globalData.host}/postTime`,
+      method: 'post',
       data: {
         // userId,
         dateTime,
@@ -107,7 +109,6 @@ Page({
       userId,
     });
     setInterval(() => {
-      console.log(moment().format('HH:mm:ss'))
       this.setData({
         currentTime: moment().format('HH:mm:ss')
       })
