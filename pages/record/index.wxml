@@ -34,9 +34,9 @@
     </view>
   </view>
   <view class="line-container">
-    <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecWeek }}"></ec-canvas>
+    <ec-canvas id="mychart-week-line" canvas-id="mychart-line" ec="{{ ecWeek }}"></ec-canvas>
   </view>
   <view class="line-container">
-    <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ecMonth }}"></ec-canvas>
+    <ec-canvas id="mychart-month-line" canvas-id="mychart-line" ec="{{ ecMonth }}"></ec-canvas>
   </view>
 </view>
