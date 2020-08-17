@@ -6,21 +6,31 @@ App({
     wx.login({
       success: (res) => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res.code);
         wx.request({
           url: `${this.globalData.host}/wxLogin`,
+          method: 'post',
           data: {
             code: res.code,
           },
           success(res) {
-            console.log(res.data);
-            const { userId } = res.Date;
+            if (!res.data.status) {
+              wx.showToast({
+                title: res.data.errMsg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+            const { userId } = res.data.data;
             // 存储用户id
             wx.setStorageSync("userId", userId);
           },
-          fail() {
-            console.error("请求失败");
-          },
+          fail(err) { 
+            wx.showToast({
+              title: err.errMsg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
         });
       },
     });
@@ -47,6 +57,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    host: "localhost:3001/api",
+    host: "http://localhost:3001/api",
   },
 });

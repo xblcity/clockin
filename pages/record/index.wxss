@@ -1,8 +1,4 @@
 /**index.wxss**/
-.info {
-  font-size: 22rpx;
-  color: #ccc;
-}
 .content {
   margin: 40rpx auto;
   width: 660rpx;
@@ -10,22 +6,45 @@
   background-color: aliceblue;
   padding: 20rpx;
 }
-.list {
+.content .line {
+  display: flex;
+}
+.line .info {
+  width: 15%;
+  font-size: 22rpx;
+  text-align: center;
+  color: #ccc;
+}
+.line .list {
+  width: 85%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
-.content .textBox {
+.line .list.title {
+  padding: 15rpx 0;
+}
+.list .textBox {
   display: flex;
+  width: 33%;
   flex-direction: column;
   align-items: center;
 }
-.content .textBox .time {
+.list .textBox .time {
   margin-bottom: 6rpx;
   font-size: 28rpx;
   font-weight: bold;
-  color: #12c2e9;
 }
-.content .textBox .desc {
+.list .textBox .time.week {
+  color: #77A1D3;
+}
+.list .textBox .time.month {
+  color: #79CBCA;
+}
+.list .textBox .time.total {
+  color: #E684AE;
+}
+.list .textBox .desc {
   font-size: 24rpx;
   color: #333;
 }

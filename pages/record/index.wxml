@@ -1,37 +1,67 @@
 <!-- index.wxml -->
 <view class="record-container">
   <view class="content">
-    <view class="info">本周</view>
-    <view class="list">
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均早起</view>
-      </view>
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均早睡</view>
-      </view>
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均睡眠</view>
+
+    <view class="line">
+      <view class="info"></view>
+      <view class="list title">
+        <view class="textBox">
+          <view class="desc">平均早起</view>
+        </view>
+        <view class="textBox">
+          <view class="desc">平均早睡</view>
+        </view>
+        <view class="textBox">
+          <view class="desc">平均睡眠</view>
+        </view>
       </view>
     </view>
 
-    <view class="info">累计</view>
-    <view class="list">
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均起床</view>
-      </view>
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均睡觉</view>
-      </view>
-      <view class="textBox">
-        <view class="time">12.17</view>
-        <view class="desc">平均睡眠</view>
+    <view class="line">
+      <view class="info">本周</view>
+      <view class="list">
+        <view class="textBox">
+          <view class="time week">{{weekWakeUpTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time week">{{weekBedTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time week">{{weekSleepTime}}</view>
+        </view>
       </view>
     </view>
+
+    <view class="line">
+      <view class="info">本月</view>
+      <view class="list">
+        <view class="textBox">
+          <view class="time month">{{monthWakeUpTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time month">{{monthBedTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time month">{{monthSleepTime}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="line">
+      <view class="info">累计</view>
+      <view class="list">
+        <view class="textBox">
+          <view class="time total">{{totalAverageWakeUpTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time total">{{totalAverageBedTime}}</view>
+        </view>
+        <view class="textBox">
+          <view class="time total">{{totalAverageSleepTime}}</view>
+        </view>
+      </view>
+    </view>
+
   </view>
   <view class="line-container">
     <ec-canvas id="mychart-week-line" canvas-id="mychart-line" ec="{{ ecWeek }}"></ec-canvas>
@@ -39,4 +69,6 @@
   <view class="line-container">
     <ec-canvas id="mychart-month-line" canvas-id="mychart-line" ec="{{ ecMonth }}"></ec-canvas>
   </view>
+
+  <mp-toptips msg="{{errText}}" type="error" show="{{errShow}}"></mp-toptips>
 </view>
