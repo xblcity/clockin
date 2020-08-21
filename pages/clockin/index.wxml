@@ -9,6 +9,4 @@
     <view class="sleep" bindtap="tapBedButton">睡觉打卡</view>
   </view>
   <mp-toptips msg="{{errText}}" type="error" show="{{errShow}}"></mp-toptips>
-  <mp-dialog title="{{successText}}" show="{{successShow}}" bindbuttontap="closeDialog" buttons="{{buttonText}}">
-  </mp-dialog>
 </view>

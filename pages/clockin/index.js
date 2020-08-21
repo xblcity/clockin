@@ -1,13 +1,10 @@
 //index.js
 //获取应用实例
 const app = getApp();
-import moment from '../../utils/moment.min.js'
+import moment from "../../utils/moment.min.js";
 
 Page({
   data: {
-    successShow: false,
-    sucessText: "",
-    buttonText: [{ text: "确定" }],
     errShow: false,
     errText: "",
     userId: "",
@@ -22,36 +19,38 @@ Page({
   // 点击起床打卡
   tapWakeUpButton(e) {
     const hour = new Date().getHours();
-    if (hour > 12) {
-      this.setData({
-        errShow: true,
-        errText: "打卡不在时间0~12点范围内",
-      });
-      return;
-    }
-    const userId = wx.getStorageSync("userId");
+    // if (hour > 12) {
+    //   this.setData({
+    //     errShow: true,
+    //     errText: "打卡不在时间0~12点范围内",
+    //   });
+    //   return;
+    // }
     // 发起请求
-    console.log(moment())
     const that = this;
+    const dateTime = moment().format("YYYY-MM-DD");
+    const wakeUpTime = moment().format("HH:mm:ss");
     wx.request({
       url: `${app.globalData.host}/postTime`,
+      method: 'post',
       data: {
-        userId,
+        userId: that.data.userId,
         dateTime,
-        bedTime,
+        wakeUpTime,
       },
       success(res) {
         if (res.statusCode !== 200) {
           that.setData({
             errShow: true,
-            errText: res.data.errMsg,
+            errText: res.data.errMsg || '服务器错误',
           });
-          return
+          return;
         }
-        that.setData({
-          successShow: true,
-          sucessText: res.data.successMsg,
-        });
+        wx.showToast({
+          title: res.data.successMsg,
+          icon: 'success',
+          duration: 2000
+        })
       },
       fail() {
         that.setData({
@@ -63,22 +62,21 @@ Page({
   },
   tapBedButton(e) {
     const hour = new Date().getHours();
-    if (hour < 20) {
-      this.setData({
-        errShow: true,
-        errText: "打卡不在时间8~12点范围内",
-      });
-      return;
-    }
+    // if (hour < 20) {
+    //   this.setData({
+    //     errShow: true,
+    //     errText: "打卡不在晚上8~12点范围内",
+    //   });
+    //   return;
+    // }
     const that = this;
-    const dateTime = moment().format('YYYY-MM-DD')
-    const bedTime = moment().format('HH:mm:ss')
-    console.log(`${app.globalData.host}/postTime`,dateTime, bedTime,this.state.userId  )
+    const dateTime = moment().format("YYYY-MM-DD");
+    const bedTime = moment().format("HH:mm:ss");
     wx.request({
       url: `${app.globalData.host}/postTime`,
-      method: 'post',
+      method: "post",
       data: {
-        // userId,
+        userId: that.data.userId,
         dateTime,
         bedTime,
       },
@@ -86,14 +84,15 @@ Page({
         if (res.statusCode !== 200) {
           that.setData({
             errShow: true,
-            errText: res.data.errMsg,
+            errText: res.data.errMsg || '服务器错误',
           });
-          return
+          return;
         }
-        that.setData({
-          successShow: true,
-          sucessText: res.data.successMsg,
-        });
+        wx.showToast({
+          title: res.data.successMsg,
+          icon: 'success',
+          duration: 2000
+        })
       },
       fail() {
         that.setData({
@@ -107,11 +106,11 @@ Page({
     const userId = wx.getStorageSync("userId");
     this.setData({
       userId,
-    });
+    }); 
     setInterval(() => {
       this.setData({
-        currentTime: moment().format('HH:mm:ss')
-      })
+        currentTime: moment().format("HH:mm:ss"),
+      });
     }, 1000);
   },
 });

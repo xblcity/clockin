@@ -160,32 +160,26 @@ Page({
   },
 
   data: {
+    hasLoad: false,
     ecWeek: {
       lazyLoad: true,
     },
     ecMonth: {
       lazyLoad: true,
     },
-    errShow: false,
-    errText: "",
-    weekSleepTime: '',
-    weekWakeUpTime: '',
-    weekBedTime: '',
-    monthSleepTime: '',
-    monthWakeUpTime: '',
-    monthBedTime: '',
-    totalAverageSleepTime: '',
-    totalAverageWakeUpTime: '',
-    totalAverageBedTime: '',
+    weekSleepTime: "",
+    weekWakeUpTime: "",
+    weekBedTime: "",
+    monthSleepTime: "",
+    monthWakeUpTime: "",
+    monthBedTime: "",
+    totalAverageSleepTime: "",
+    totalAverageWakeUpTime: "",
+    totalAverageBedTime: "",
   },
 
-  onReady() {
-    // 获取组件
-    this.ecWeekComponent = this.selectComponent("#mychart-week-line");
-    this.ecMonthComponent = this.selectComponent("#mychart-month-line");
-
+  handleRequest() {
     const userId = wx.getStorageSync("userId");
-
     const that = this;
     wx.request({
       url: `${app.globalData.host}/postDayList`,
@@ -195,10 +189,10 @@ Page({
       },
       success(res) {
         if (!res.data.status) {
-          // console.log("错误提示", res.data.errMsg);
-          that.setData({
-            errShow: true,
-            errText: res.data.errMsg,
+          wx.showToast({
+            title: res.data.errMsg || "请求失败",
+            icon: "none",
+            duration: 2000,
           });
           return;
         }
@@ -217,15 +211,15 @@ Page({
           totalAverageBedTime,
         } = res.data.data;
         that.setData({
-          weekSleepTime,
-          weekWakeUpTime,
-          weekBedTime,
-          monthSleepTime,
-          monthWakeUpTime,
-          monthBedTime,
-          totalAverageSleepTime,
-          totalAverageWakeUpTime,
-          totalAverageBedTime,
+          weekSleepTime: weekSleepTime || "暂无数据",
+          weekWakeUpTime: weekWakeUpTime || "暂无数据",
+          weekBedTime: weekBedTime || "暂无数据",
+          monthSleepTime: monthSleepTime || "暂无数据",
+          monthWakeUpTime: monthWakeUpTime || "暂无数据",
+          monthBedTime: monthBedTime || "暂无数据",
+          totalAverageSleepTime: totalAverageSleepTime || "暂无数据",
+          totalAverageWakeUpTime: totalAverageWakeUpTime || "暂无数据",
+          totalAverageBedTime: totalAverageBedTime || "暂无数据",
         });
         // setState
         that.ecWeekComponent.init((canvas, width, height, dpr) => {
@@ -257,16 +251,37 @@ Page({
         });
       },
       fail(err) {
-        that.setData({
-          errShow: true,
-          errText: err,
+        wx.showToast({
+          title: err.errMsg || "请求失败",
+          icon: "none",
+          duration: 2000,
         });
         return;
       },
     });
   },
 
+  onReady() {
+    // 获取组件
+    this.ecWeekComponent = this.selectComponent("#mychart-week-line");
+    this.ecMonthComponent = this.selectComponent("#mychart-month-line");
+    this.handleRequest();
+    this.setData({
+      hasLoad: false,
+    });
+  },
+
   onLoad() {
+    this.setData({
+      hasLoad: true,
+    });
+  },
+
+  onShow() {
+    // 非第一次 会触发请求
+    if (!this.data.hasLoad) {
+      this.handleRequest();
+    }
     // const userId = wx.getStorageSync("userId");
     // 用户不存在或者未登录，跳转至mine
     // if (!userId) {
