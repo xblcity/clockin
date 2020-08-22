@@ -57,6 +57,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    host: "http://localhost:3001/api",
+    host: "https://clockin.xblcity.com",
   },
 });

@@ -19,13 +19,13 @@ Page({
   // 点击起床打卡
   tapWakeUpButton(e) {
     const hour = new Date().getHours();
-    // if (hour > 12) {
-    //   this.setData({
-    //     errShow: true,
-    //     errText: "打卡不在时间0~12点范围内",
-    //   });
-    //   return;
-    // }
+    if (hour > 12) {
+      this.setData({
+        errShow: true,
+        errText: "打卡不在时间0~12点范围内",
+      });
+      return;
+    }
     // 发起请求
     const that = this;
     const dateTime = moment().format("YYYY-MM-DD");
@@ -62,13 +62,13 @@ Page({
   },
   tapBedButton(e) {
     const hour = new Date().getHours();
-    // if (hour < 20) {
-    //   this.setData({
-    //     errShow: true,
-    //     errText: "打卡不在晚上8~12点范围内",
-    //   });
-    //   return;
-    // }
+    if (hour < 20) {
+      this.setData({
+        errShow: true,
+        errText: "打卡不在晚上8~12点范围内",
+      });
+      return;
+    }
     const that = this;
     const dateTime = moment().format("YYYY-MM-DD");
     const bedTime = moment().format("HH:mm:ss");
