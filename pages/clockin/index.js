@@ -19,10 +19,10 @@ Page({
   // 点击起床打卡
   tapWakeUpButton(e) {
     const hour = new Date().getHours();
-    if (hour > 12) {
+    if (hour > 9 || hour < 4) {
       this.setData({
         errShow: true,
-        errText: "打卡不在时间0~12点范围内",
+        errText: "打卡不在时间4~10点范围内",
       });
       return;
     }
