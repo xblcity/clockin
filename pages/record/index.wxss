@@ -1,51 +1,59 @@
-/* .log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
+/**index.wxss**/
+.content {
+  margin: 40rpx auto;
+  width: 660rpx;
+  border-radius: 10rpx;
+  background-color: aliceblue;
+  padding: 20rpx;
 }
-.log-item {
-  margin: 10rpx;
-} */
+.content .line {
+  display: flex;
+}
+.line .info {
+  width: 15%;
+  font-size: 22rpx;
+  text-align: center;
+  color: #ccc;
+}
+.line .list {
+  width: 85%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.line .list.title {
+  padding: 15rpx 0;
+}
+.list .textBox {
+  display: flex;
+  width: 33%;
+  flex-direction: column;
+  align-items: center;
+}
+.list .textBox .time {
+  margin-bottom: 6rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.list .textBox .time.week {
+  color: #77A1D3;
+}
+.list .textBox .time.month {
+  color: #79CBCA;
+}
+.list .textBox .time.total {
+  color: #E684AE;
+}
+.list .textBox .desc {
+  font-size: 24rpx;
+  color: #333;
+}
+
 .line-container {
-  /* position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0; */
-  width: 100%;
-  height: 300px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
+  width: 750rpx;
+  height: 500rpx;
 }
-
-.bar-container {
-  width: 100%;
-  height: 300px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.calendar-container {
-  width: 100%;
-  height: 400px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
 ec-canvas {
   width: 100%;
   height: 100%;
-  /* height: 200px; */
 }
